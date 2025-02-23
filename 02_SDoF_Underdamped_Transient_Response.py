@@ -10,11 +10,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
-m  = 800;         # Mass (kg)
-k  = 1.2*10**5;   # Spring Stiffness (N/m)
-c  = 8*10**3;     # Damping Coefficient (N.s/m)
-xo = 0.1;       # Amplitude (m)
-xo_dot = 0;       # Inicial Velocity (m/s)
+# Mass (kg)
+m  = 800;
+# Spring Stiffness (N/m)
+k  = 1.2*10**5;
+# Damping Coefficient (N.s/m)
+c  = 8*10**3;
+# Amplitude (m)
+xo = 0.1;
+# Inicial Velocity (m/s)
+xo_dot = 0;
 
 wn = math.sqrt(k/m)
 Cc = 2*math.sqrt(k*m)
@@ -27,18 +32,31 @@ increment = 0.002
 t = np.arange(xstart,xstop,increment)
 
 xt = (xo/math.sin(math.atan(wa*xo/(xo_dot+Z*wn*xo))))*np.exp(-Z*wn*t)*np.sin(wa*t+math.atan(wa*xo/(xo_dot+Z*wn*xo)))
-
 xt_dot = ((xo/math.sin(math.atan(wa*xo/(xo_dot+Z*wn*xo))))*np.exp(-Z*wn*t))*((-Z*wn*np.sin(wa*t+math.atan(wa*xo/(xo_dot+Z*wn*xo))))+(wa*np.cos(wa*t+math.atan(wa*xo/(xo_dot+Z*wn*xo)))))
-
 xt_dot_dot = ((xo/math.sin(math.atan(wa*xo/(xo_dot+Z*wn*xo))))*np.exp(-Z*wn*t))*(((-Z**2*wn**2*np.sin(wa*t+math.atan(wa*xo/(xo_dot+Z*wn*xo))))-(wa*Z*wn*np.cos(wa*t+math.atan(wa*xo/(xo_dot+Z*wn*xo)))))+((-Z*wn*wa*np.cos(wa*t+math.atan(wa*xo/(xo_dot+Z*wn*xo))))-(wa**2*np.sin(wa*t+math.atan(wa*xo/(xo_dot+Z*wn*xo))))))
                                                   
 # Plotting
 
+plt.figure(1)
 plt.plot(t,xt)
+plt.title("System Response")
+plt.xlabel("Time (s)")
+plt.ylabel("Displacement (m)")
+plt.grid()
+plt.show()
+
+plt.figure(2)
 plt.plot(t,xt_dot)
+plt.title("System Response")
+plt.xlabel("Time (s)")
+plt.ylabel("Velocity (m/s)")
+plt.grid()
+plt.show()
+
+plt.figure(3)
 plt.plot(t,xt_dot_dot)
-plt.title("Step Response")
-plt.xlabel("t")
-plt.ylabel("xt")
+plt.title("System Response")
+plt.xlabel("Time (s)")
+plt.ylabel("Acceleration (m^2/s)")
 plt.grid()
 plt.show()
