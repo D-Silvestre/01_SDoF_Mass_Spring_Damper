@@ -10,11 +10,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
-m      = 800;         # Mass (kg)
-k      = 1.2*10**5;   # Spring Stiffness (N/m)
-c      = 4*10**4;     # Damping Coefficient (N.s/m)
-xo     = 1;           # Amplitude (m)
-xo_dot = 0;           # Inicial Velocity (m/s)
+# Mass (kg)
+m      = 800;
+# Spring Stiffness (N/m)
+k      = 1.2*10**5;
+# Damping Coefficient (N.s/m)
+c      = 4*10**4;
+# Amplitude (m)
+xo     = 1;
+# Inicial Velocity (m/s)
+xo_dot = 0;
 
 wn = math.sqrt(k/m)
 Cc = 2*math.sqrt(k*m)
@@ -29,12 +34,31 @@ increment = 0.002
 t = np.arange(xstart,xstop,increment)
 
 xt = (A*np.exp((-Z+math.sqrt(Z**2-1))*wn*t))+(B*np.exp((-Z-math.sqrt(Z**2-1))*wn*t))
+xt_dot = (A*wn*(np.exp((-Z+math.sqrt(Z**2-1))*wn*t))*(-Z+math.sqrt(Z**2-1)))+(B*wn*(np.exp((-Z-math.sqrt(Z**2-1))*wn*t))*(-Z-math.sqrt(Z**2-1)))
+xt_dot_dot = (A*np.sqrt(wn)*(np.exp((-Z+math.sqrt(Z**2-1))*wn*t))*(-Z+math.sqrt(Z**2-1))*(-Z+math.sqrt(Z**2-1)))+(B*np.sqrt(wn)*(np.exp((-Z-math.sqrt(Z**2-1))*wn*t))*(-Z-math.sqrt(Z**2-1))*(-Z-math.sqrt(Z**2-1)))
 
 # Plotting
 
+plt.figure(1)
 plt.plot(t,xt)
-plt.title("Step Response")
-plt.xlabel("t")
-plt.ylabel("xt")
+plt.title("System Response")
+plt.xlabel("Time (s)")
+plt.ylabel("Displacement (m)")
+plt.grid()
+plt.show()
+
+plt.figure(2)
+plt.plot(t,xt_dot)
+plt.title("System Response")
+plt.xlabel("Time (s)")
+plt.ylabel("Velocity (m/s)")
+plt.grid()
+plt.show()
+
+plt.figure(3)
+plt.plot(t,xt_dot_dot)
+plt.title("System Response")
+plt.xlabel("Time (s)")
+plt.ylabel("Acceleration (m^2/s)")
 plt.grid()
 plt.show()
